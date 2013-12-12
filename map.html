@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<title>KU Map</title>
+		<script src="leaflet-0.7.1/leaflet-src.js"></script>
+		<script src="leaflet-0.7.1/leaflet.js"></script>
+		<script src="yatayat.js"></script>
+		<script src="jquery-1.7.2.min.js"></script>
+		<script src="osmtogeojson.js"></script>
+		<script src="lodash.js"></script>
+		<script src="ku_new.js"></script>
+		<script src="ku-p.js"></script>
+		<link rel="stylesheet" href="leaflet-0.7.1/leaflet.css" />
+	</head>
+	
+	<body>
+		<div id="Title" style="height: 3%">
+			KU Map
+		</div>
+		<div id='map' style="width: 100%; height: 97%"></div>
+
+		<script>
+		var map= new L.Map('map').setView([27.61878,85.53690],12);
+		L.tileLayer('http://{s}.tile.cloudmade.com/8f89a9c8f6df4cee8d51df49c53a4aa0/9	97/256/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+		L.marker([27.61878,85.5369],{icon: L.icon({iconUrl:'KU.png',iconSize:[20,20]})}).addTo(map)
+			.bindPopup('Kathmandu University <br> ',img='KU.png')
+			.openPopup(closeOnClick=0);
+			
+		// <!-- YY.fromConfig("config.stable.json", function(sys) {
+                // debugger;
+                //system = sys;
+                // console.log(system);
+                //YY.render_(system, map, undefined, //includeIDObject; try {"2269045": true} for an example
+                //undefined // leafletBaseOptions
+                //);
+				//var stopNames = _.compact(_.pluck(system.allStops(), 'name'));
+			//}; -->
+				
+		//var osm2geo=osmtogeojson("ku.osm","area:highway");
+		var geojsonMarkerOptions = {
+		    radius: 4,
+		    fillColor: "#ff7800",
+		    color: "#000",
+		    weight: 1,
+		    opacity: 1,
+		    fillOpacity: 0.8
+		};
+
+		function onEachFeature(feature, layer) {
+			var popupContent = feature.properties.name;
+			layer.bindPopup(popupContent);
+
+			// if (feature.properties && feature.properties.popupContent) {
+			// 	popupContent += feature.properties.popupContent;
+			// }			
+		}
+		var huyt = L.geoJson(ku,{
+			style: function (feature) {
+				return feature.properties && feature.properties.style;
+			},
+			onEachFeature: onEachFeature,
+			pointToLayer: function (feature, latlng) {
+		        return L.circleMarker(latlng, geojsonMarkerOptions);
+		    }
+		}).addTo(map);
+
+		var huyt1 = L.geoJson(kul,{
+			style: function (feature) {
+				return feature.properties && feature.properties.style;
+			},
+			onEachFeature: onEachFeature,	
+		}).addTo(map);
+
+		var huyt2 = L.geoJson(kup,{
+			style: function (feature) {
+				return feature.properties && feature.properties.style;
+			},
+			onEachFeature: onEachFeature,	
+		}).addTo(map);
+
+		var esp_label= L.geoJson(ku_label,{
+			style: function (feature) {
+				return feature.properties && feature.properties.style;
+			},
+			onEachFeature: onEachFeature,
+			pointToLayer : function(feature,latlng){
+				// debugger;
+				myIcon=L.divIcon({ html : feature.properties.name});
+				return L.marker(latlng,{icon:myIcon}).addTo(map);
+				// debugger;
+				// mark= L.circleMarker(latlng,geojsonMarkerOptions).bindPopup(feature.properties.name,{closeOnClick:false}).addTo(map);
+				// mark.bindPopup(feature.properties.name,{closeOnClick:false});
+			}
+		}).addTo(map);
+		</script>
+	</body>
+</html>
