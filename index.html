@@ -9,20 +9,39 @@
 		<script src="lodash.js"></script>
 		<script src="ku_new.js"></script>
 		<script src="ku-p.js"></script>
+		<script src="http://www.mapquestapi.com/sdk/js/v7.0.s/mqa.toolkit.js?key=Fmjtd%7Cluubn1uyn9%2Crs%3Do5-90baq0 "></script>
 		<link rel="stylesheet" href="leaflet-0.7.1/leaflet.css" />
+		// <script type="text/javascript">
+		// 	MQA.EventUtil.observe(window, 'load', function() {
+    
+  //    		/*Create an object for options*/
+  //   		var options={
+  //      		elt:document.getElementById('map'),       /*ID of element on the page where you want the map added*/
+	 //    	zoom:13,                                  /*initial zoom level of the map*/
+  //   	    latLng:{lat:27.66878, lng:85.45690},  /*center of map in latitude/longitude */
+  //   	    mtype:'map',                              /*map type (map)*/
+  //   	    bestFitMargin:0,                          /*margin offset from the map viewport when applying a bestfit on shapes*/
+  //   	    zoomOnDoubleClick:true                    /*zoom in when double-clicking on map*/
+  //   	    };
+ 
+  //    		/*Construct an instance of MQA.TileMap with the options object*/
+  //    		window.map = new MQA.TileMap(options);
+  //  			});
+		// </script>
+
 	</head>
 	
 	<body>
 		<div id="Title" style="height: 3%">
 			KU Map
 		</div>
-		<div id='map' style="width: 100%; height: 97%"></div>
+		<div id='map' style="width: 100%; height: 96%"></div>
 
 		<script>
-		var map= new L.Map('map').setView([27.61878,85.53690],12);
+		var map= new L.Map('map').setView([27.66878,85.45690],12);
 		L.tileLayer('http://{s}.tile.cloudmade.com/8f89a9c8f6df4cee8d51df49c53a4aa0/9	97/256/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-			}).addTo(map);
-		L.marker([27.61878,85.5369],{icon: L.icon({iconUrl:'KU.png',iconSize:[20,20]})}).addTo(map)
+		 	}).addTo(map);
+		L.marker([27.61878,85.5369],{icon: L.icon({iconUrl:'KU.png',iconSize:[30,30]})}).addTo(map)
 			.bindPopup('Kathmandu University <br> ',img='KU.png')
 			.openPopup(closeOnClick=0);
 			
@@ -71,12 +90,12 @@
 			onEachFeature: onEachFeature,	
 		}).addTo(map);
 
-		var huyt2 = L.geoJson(kup,{
-			style: function (feature) {
-				return feature.properties && feature.properties.style;
-			},
-			onEachFeature: onEachFeature,	
-		}).addTo(map);
+		// var huyt2 = L.geoJson(kup,{
+		// 	style: function (feature) {
+		// 		return feature.properties && feature.properties.style;
+		// 	},
+		// 	onEachFeature: onEachFeature,	
+		// }).addTo(map);
 
 		var esp_label= L.geoJson(ku_label,{
 			style: function (feature) {
@@ -93,5 +112,6 @@
 			}
 		}).addTo(map);
 		</script>
+		
 	</body>
 </html>
